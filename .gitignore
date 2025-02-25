@@ -1,0 +1,5 @@
+/license
+.DS_Store
+management-context*
+truststore.jks
+kafka_*

@@ -1,0 +1,10 @@
+apiVersion: gravitee.io/v1alpha1
+kind: ManagementContext
+metadata:
+  name: context
+spec:
+  baseUrl: https://your-control-plane.dev/
+  environmentId: DEFAULT
+  organizationId: DEFAULT
+  auth:
+    bearerToken: ...

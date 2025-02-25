@@ -1,0 +1,44 @@
+apiVersion: gravitee.io/v1alpha1
+kind: ApiV4Definition
+metadata:
+  name: kafka-proxy-api
+  namespace: gravitee
+spec:
+  name: kafka-proxy-api
+  contextRef:
+    name: context
+  # For DBless mode (not recommended yet), instead of contextRef, 
+  # use the following definitionContext parameter
+  # definitionContext:
+  #   origin: KUBERNETES
+  #   syncFrom: KUBERNETES
+  description: "V4 Native Kafka API managed by GKO"
+  version: "1.0"
+  type: NATIVE
+  listeners:
+    - type: KAFKA
+      host: "myapi"
+      port: 9092
+      entrypoints:
+        - type: native-kafka
+          qos: AUTO
+  endpointGroups:
+    - name: Default Native endpoint group
+      type: native-kafka
+      sharedConfiguration:
+        security:
+          protocol: PLAINTEXT
+      endpoints:
+        - name: Default Native proxy
+          type: native-kafka
+          inheritConfiguration: true
+          "weight": 1
+          configuration:
+            bootstrapServers: "my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"
+          secondary: false
+  plans:
+    KeyLess:
+      name: "Free plan"
+      description: "This plan does not require any authentication"
+      security:
+        type: "KEY_LESS"

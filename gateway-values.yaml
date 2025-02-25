@@ -1,0 +1,73 @@
+apim:
+  managedServiceAccount: true
+
+# For DBless mode (not recommended yet), this would be set
+# dbLess: true
+
+secrets:
+  kubernetes:
+    enabled: true
+
+api:
+  enabled: false
+
+portal:
+  enabled: false
+
+ui:
+  enabled: false
+
+mongodb:
+  enabled: false
+
+ratelimit:
+  type: none
+
+management:
+  type: http
+
+gateway:
+  # For DBless mode (not recommended yet), this would be set
+  # dbLess: true
+  service:
+    type: LoadBalancer
+    externalPort: 8082
+    loadBalancerIP: 127.0.0.1
+
+  services:
+    sync:
+      kubernetes:
+        enabled: true
+  
+  reporters:
+    elasticsearch:
+      enabled: false
+  
+  # Gateway Kafka server
+  kafka:
+    enabled: true
+
+    routingMode: host # default is host. Only host is supported for now.
+    # Routing Host Mode
+    routingHostMode:
+      brokerPrefix: broker- # default is broker-
+
+      # The default domain where the Kafka APIs are exposed. ex: `myapi` will be exposed as `myapi.mycompany.org`
+      # Needs to match the public wildcard DNS/Certificate.
+      defaultDomain: kafka.local
+      defaultPort: 9092 # Default public port for Kafka APIs. Default is 9092
+    ssl:
+      keystore:
+        type: PEM
+        secret: secret://kubernetes/my-certificate
+        watch: true
+      openssl: false
+
+  # These settings will point the gateway to a control plane
+  # from which it will load API definitions. 
+  # For DBless mode (not yet recommended), this would not be necessary
+  management:
+    http:
+      url: "https://your-control-plane.com"
+      username: username
+      password: password
