@@ -1,5 +1,7 @@
 # apiops-strimzi-tutorial
 
+![architecture](kg-strimzi-archi.png)
+
 ## Prereqs
 
 This tutorial assumes you have:
