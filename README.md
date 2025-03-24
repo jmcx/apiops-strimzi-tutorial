@@ -70,9 +70,10 @@ helm install \
   --set crds.enabled=true
 ```
 
-Create the certificate:
+Create the certificate in the `gravitee` namespace:
 
 ```sh
+kubectl create namespace gravitee
 kubectl apply -f certs.yml
 ```
 
